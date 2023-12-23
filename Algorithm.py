@@ -1,10 +1,8 @@
-n = int(input())
-c = 1
-while n > 10 ** c:
-    if(n%10 ** c >= 10 ** c / 2 ):
-        n = n - n%10**c + 10**c
-    else:
-        n = n - n%10**c 
-    c = c + 1
+[n,m] = list(map(int, input().split()))
 
-print(n)
+def getDivNum(a):
+    if(a == 1):
+        return 0
+    return getDivNum(a // 2) + getDivNum( a - a//2) + 1
+
+print(getDivNum(n) + n * getDivNum(m))
