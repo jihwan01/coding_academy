@@ -1,10 +1,11 @@
-a = input("")
-while len(a) % 3 != 0:
-    a = '0' + a
+n = input()
 
-res = ''
-for i in range(0, len(a), 3):
-    temp = int(a[i])*4 + int(a[i+1]) * 2 + int(a[i+2]) 
-    res = res + str(temp)
-    
-print(res)
+def fibonacci(n, memo={}):
+    if n in memo:
+        return memo[n]
+    if n <= 2:
+        return 1
+    memo[n] = fibonacci(n-1, memo) + fibonacci(n-2, memo)
+    return memo[n]
+
+print(fibonacci(int(n)))
