@@ -2,8 +2,23 @@
 
 
 int main() {
-    int k, q, l, b, kn, p;
-    scanf("%d %d %d %d %d %d", &k, &q, &l, &b, &kn, &p);
-    printf("%d %d %d %d %d %d", 1-k, 1-q, 2-l, 2-b, 2-kn, 8-p);
+    char a[1005],b[1005];
+    scanf("%s\n", a);
+    scanf("%s", b);
+    int i = 0;
+    int len_a = 0;
+    int len_b = 0;
+    while(a[i++] != '\0'){
+        len_a++;
+    }
+    i = 0;
+    while(b[i++] != '\0'){
+        len_b++;
+    }
+    if(len_a >= len_b){
+        printf("go");
+    }else{
+        printf("no");
+    }
     return 0;
 } 
