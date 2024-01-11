@@ -1,38 +1,54 @@
-T = int(input())
+import copy
 
-dx = [-1, 1, 0, 0]
-dy = [0, 0, 1, -1]
+N, M, V = map(int, input().split())
 
-def BFS(x,y):
-  q = [(x,y)]
-  matrix[x][y] = 0
-  
-  while q:
-    x,y = q.pop(0)
+matrix_d = [[0 for _ in range(N+1)] for _ in range(N+1)]
+visited = list()
+
+
+for i in range(M):
+    a,b = map(int, input().split())
+    matrix_d[a][b] = matrix_d[b][a] = 1
+
+matrix_b = copy.deepcopy(matrix_d)
+
+res_b = []
+res_d = []
+
+def DFS(x):
+    res_d.append(x)
+    for i in range(1,N+1):
+        matrix_d[i][x] = 0
+    for i in range(1,N+1):
+        if(matrix_d[x][i] == 1):
+            DFS(i) 
+            
     
-    for i in range(4):
-      nx = x + dx[i]
-      ny = y + dy[i]
+def BFS(x):
+    q = [x]
+    for j in range(1,N+1):
+        matrix_b[j][x] = 0
+    while q:
+        v = q.pop(0)
+        res_b.append(v)
+        for i in range(1,N+1):
+            if(matrix_b[v][i] == 1):
+                q.append(i)        
+                for j in range(1,N+1):
+                    matrix_b[j][i] = 0
+            
+DFS(V)
+BFS(V)
 
-      if(nx >= 0 and nx < m and ny >= 0 and ny < n and matrix[nx][ny] == 1):
-        q.append((nx, ny))
-        matrix[nx][ny] = 0 
-  
-  
-
-for i in range(T):
-  m, n, k = map(int, input().split())
-  
-  matrix = [[0 for _ in range(n)] for _ in range(m)]
-  res = 0
-  
-  for j in range(k):
-    x,y = map(int, input().split())
-    matrix[x][y] = 1
-  
-  for a in range(m):
-    for b in range(n):
-      if(matrix[a][b] == 1):
-        BFS(a,b)
-        res += 1
-  print(res)
+for i, v in enumerate(res_d):
+    if(i != len(res_d)-1):
+        print(v, end=" ")
+    else:
+        print(v, end="\n")
+    
+for i, v in enumerate(res_b):
+    if(i != len(res_b)-1):
+        print(v, end=" ")
+    else:
+        print(v)
+    
