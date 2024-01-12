@@ -1,54 +1,26 @@
 import sys
-sys.setrecursionlimit(30000)
+sys.setrecursionlimit(1000000)
 
-N, M = map(int, input().split())
+N = int(input())
 
-matrix = [[0 for _ in range(N+1)] for _ in range(N+1)]
+matrix = [[] for _ in range(N+1)]
+parent = [-1 for _ in range(N+1)]
 
-for i in range(M):
+
+def DFS(x):
+    for i in matrix[x]:
+        if(parent[i] == -1):
+            parent[i] = x
+            DFS(i)
+
+for i in range(N-1):
     a, b = map(int, input().split())
-    matrix[a][b] = matrix[b][a] = 1
+    matrix[a].append(b)
+    matrix[b].append(a)
 
-res = 1
-min = float('inf')
+DFS(1)
 
-def DFS(x, d, dist):
-    dist[x] = d
-    for i in range(1, N+1):
-        if(matrix[x][i] == 1 and dist[i] > d+1):
-            DFS(i, d+1, dist)
-
-def BFS(x):
-    q = [x]
-    dist = [-1 for _ in range(N+1)]
-    dist[x] = 0
-    while q:
-        nx = q.pop(0)
-        for i in range(1, N+1):
-            if(matrix[nx][i] == 1 and dist[i] == -1):
-                q.append(i)
-                dist[i] = dist[nx] + 1
-    sum = 1
-    for j in dist:
-        sum += j
-    return sum    
-
-for i in range(1, N+1):
-    t = BFS(i)
-    # print('This is t of index ', str(i), ' : ', str(t))
-    if(t < min):
-        res = i
-        min = t
-        
-
-for i in range(1,N+1):
-    dist = [1000 for _ in range(N+1)]
-    DFS(i, 0, dist)
-    sum = -1000
-    for j in dist:
-        sum += j
-    if(sum < min):
-        res = i
-        min = sum
-
-print(res)
+for i in parent[2:N+1]:
+    print(i)
+    
+    
