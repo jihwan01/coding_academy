@@ -1,54 +1,54 @@
-import copy
+import sys
+sys.setrecursionlimit(30000)
 
-N, M, V = map(int, input().split())
+N, M = map(int, input().split())
 
-matrix_d = [[0 for _ in range(N+1)] for _ in range(N+1)]
-visited = list()
-
+matrix = [[0 for _ in range(N+1)] for _ in range(N+1)]
 
 for i in range(M):
-    a,b = map(int, input().split())
-    matrix_d[a][b] = matrix_d[b][a] = 1
+    a, b = map(int, input().split())
+    matrix[a][b] = matrix[b][a] = 1
 
-matrix_b = copy.deepcopy(matrix_d)
+res = 1
+min = float('inf')
 
-res_b = []
-res_d = []
+def DFS(x, d, dist):
+    dist[x] = d
+    for i in range(1, N+1):
+        if(matrix[x][i] == 1 and dist[i] > d+1):
+            DFS(i, d+1, dist)
 
-def DFS(x):
-    res_d.append(x)
-    for i in range(1,N+1):
-        matrix_d[i][x] = 0
-    for i in range(1,N+1):
-        if(matrix_d[x][i] == 1):
-            DFS(i) 
-            
-    
 def BFS(x):
     q = [x]
-    for j in range(1,N+1):
-        matrix_b[j][x] = 0
+    dist = [-1 for _ in range(N+1)]
+    dist[x] = 0
     while q:
-        v = q.pop(0)
-        res_b.append(v)
-        for i in range(1,N+1):
-            if(matrix_b[v][i] == 1):
-                q.append(i)        
-                for j in range(1,N+1):
-                    matrix_b[j][i] = 0
-            
-DFS(V)
-BFS(V)
+        nx = q.pop(0)
+        for i in range(1, N+1):
+            if(matrix[nx][i] == 1 and dist[i] == -1):
+                q.append(i)
+                dist[i] = dist[nx] + 1
+    sum = 1
+    for j in dist:
+        sum += j
+    return sum    
 
-for i, v in enumerate(res_d):
-    if(i != len(res_d)-1):
-        print(v, end=" ")
-    else:
-        print(v, end="\n")
-    
-for i, v in enumerate(res_b):
-    if(i != len(res_b)-1):
-        print(v, end=" ")
-    else:
-        print(v)
-    
+for i in range(1, N+1):
+    t = BFS(i)
+    # print('This is t of index ', str(i), ' : ', str(t))
+    if(t < min):
+        res = i
+        min = t
+        
+
+for i in range(1,N+1):
+    dist = [1000 for _ in range(N+1)]
+    DFS(i, 0, dist)
+    sum = -1000
+    for j in dist:
+        sum += j
+    if(sum < min):
+        res = i
+        min = sum
+
+print(res)
