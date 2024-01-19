@@ -1,33 +1,23 @@
 import sys
 
+sys.setrecursionlimit(100000000)
 input = sys.stdin.readline
+s = input().strip()
+bs = input().strip()
 
-n,m = map(int, input().split())
-tree = [[] for _ in range(n+1)]
+blen = len(bs)
+index = 0
+st = []
+for c in s:
+    st.append(c)
+    if(st[-blen:] == list(bs)):
+        for _ in range(blen):
+            st.pop()
 
-for _ in range(n-1):
-    a, b, l = map(int, input().split())
-    tree[a].append((b, l))
-    tree[b].append((a, l))
-    
-def bfs(start, find):
-    q = []
-    q.append((start, 0))
-    visited = [False for _ in range(n + 1)]
-    visited[start] = True
-    while q:
-        a, d = q.pop(0)
-        visited[a] = True
-        if(a == find):
-            return d
-        
-        for i, id in tree[a]:
-            if(not visited[i]):
-                q.append((i, id+d))
-                
-for _ in range(m):
-    s, f = map(int, input().split())
-    print(bfs(s,f))
-    
 
-                
+if(len(st) == 0):
+    print('FRULA') 
+else:
+    for i in st:
+        print(i, end ="")
+    print()
