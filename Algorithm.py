@@ -1,17 +1,8 @@
-#9012
+#2941
 
-def is_valid_parenthesis_string(ps):
-    stack = []
-    for char in ps:
-        if char == '(':
-            stack.append(char)
-        elif char == ')':
-            if not stack:
-                return "NO"
-            stack.pop()
-    return "YES" if not stack else "NO"
-
-T = int(input())
-for _ in range(T):
-    ps = input()
-    print(is_valid_parenthesis_string(ps))
+s = input()
+arr = ['dz=', 'c=', 'c-', 'd-', 'lj', 'nj', 's=', 'z=']
+for w in arr:
+    s = s.replace(w, '+')
+    
+print(len(s))
