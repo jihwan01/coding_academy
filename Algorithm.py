@@ -1,39 +1,29 @@
-import sys
+#5430
 
-sys.setrecursionlimit(100000000)
-input = sys.stdin.readline
-
-# 17413
-s = input().strip()
-
-
-def reverse_words_in_string(s):
-    tag = False
-    word_stack = []
-    result = ''
-
-    for char in s:
-        if char == '<':
-            while word_stack:
-                result += word_stack.pop()
-            tag = True
-            result += char
-        elif char == '>':
-            tag = False
-            result += char
-        elif tag:
-            result += char
-        else:
-            if char == ' ':
-                while word_stack:
-                    result += word_stack.pop()
-                result += char
+def getResult(fstr, n, arr):
+    r = False
+    if(n != 0):
+        narr = list(map(int,arr[1:-1].split(',')))
+    else:
+        narr = list()
+    
+    for c in fstr:
+        if c=='R':
+            r = not r
+        elif c == 'D':
+            if(len(narr) < 1):
+                return 'error'
+            if(r):
+                narr.pop()
             else:
-                word_stack.append(char)
+                narr.pop(0)
+            
+    
+    return '[' + ','.join(map(str, narr if not r else narr[::-1])) + ']'
 
-    while word_stack:
-        result += word_stack.pop()
-
-    return result
-
-print(reverse_words_in_string(s))
+T = int(input())
+for _ in range(T):
+    fstr = input()
+    n = int(input())
+    arr = input()
+    print(getResult(fstr, n, arr))
