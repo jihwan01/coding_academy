@@ -1,32 +1,16 @@
 #include <stdio.h>
-//1259
-void checkPal(int n){
-    int num[6];
-    int i = 0;
-    while(n > 9){
-        num[i] = n%10;
-        n = n/10;
-        i++;
-    }
-    num[i] = n;
-    
-    for(int j = 0; j < (i+1)/2; j++){
-        if(num[j] != num[i-j]){
-            printf("no\n");
-            return;
-        }
-    }
-    printf("yes\n");
-    return;
-}
 
-
+//2292
 int main() {
     int N;
     scanf("%d", &N);
-    while(N != 0){
-        checkPal(N);
-        scanf("%d", &N);
+    
+    int sum = 1;
+    int dist = 1;
+    while(sum < N){
+        dist++;
+        sum += (dist-1)*6;
     }
+    printf("%d", dist);
     return 0;
 }
