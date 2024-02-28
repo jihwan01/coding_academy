@@ -1,35 +1,21 @@
-//10817
+//2441
 
 #include <stdio.h>
 
 
 int main() {
-    int a, b, c;
-    int res;
-    scanf("%d %d %d", &a, &b, &c);
-    
-    if(a >= b){
-        if(a <= c){
-            res = a;
-        }else{ // a가 젤 크다
-            if(b >= c){
-                res = b;
-            }else{
-                res = c;
-            }
+    int n;
+    scanf("%d", &n);
+
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < i; j++){
+            printf(" ");
         }
-    }else { // b > a
-        if(a >= c){
-            res = a;
-        }else{
-            if(b >= c){
-                res = c;
-            }else{
-                res = b;
-            }
+        for(int k = 0; k < n-i; k++){
+            printf("*");
         }
+        printf("\n");
     }
-    printf("%d\n", res);
     
 
     return 0;
