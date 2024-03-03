@@ -1,33 +1,27 @@
 #include <stdio.h>
 
-// 10811
+// 10798
 
 int main() {
-    int n, m;
-    int num[101];
-    int temp[101];
-    int a,b;
-    scanf("%d %d", &n, &m);
-    for(int i = 0; i < n+1; i++){
-        num[i] = i;
-    }
-    for(int i = 0; i<m; i++){
-        scanf("%d %d", &a, &b);
-        for(int j = 0; j < b - a + 1; j++){
-            temp[j] = num[a+j];
+    char a[5][16];
+    for(int i = 0; i < 5; i++){
+        for(int j = 0; j < 16; j++){
+            a[i][j] = '\0';
         }
-        for(int j = 0; j < b - a + 1; j++){
-            num[a+j] = temp[b-a-j];
+    }
+    for(int i = 0; i < 5; i++){
+        scanf("%s", &a[i][0]);
+    }
+    
+    for(int i = 0; i < 15; i++){
+        for(int j = 0; j<5; j++){
+            if(a[j][i] != '\0'){
+                printf("%c", a[j][i]);
+            }
         }
     }
 
-    for(int i = 1; i <= n; i++){
-        if(i != n){
-            printf("%d ", num[i]);
-        }else{
-            printf("%d\n", num[i]);
-        }
-    }
+    
 
     return 0;
  }
